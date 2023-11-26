@@ -23,7 +23,7 @@ db.mentors.find({ "menteeCount": { "$gt": 15 } });
 
 // 6.Find the number of users who are absent and task is not submitted between 15 oct-2020 and 31-oct-2020
 
-db.students.count({ "data.attendance": "absent", "data.taskSubmitted": false, "data.date": { "$gte": new Date(2023, 9, 15), "$lte": new Date(2023, 9, 31) } });
+db.students.count({ "data": { "$elemMatch": { "attendance": "absent", "taskSubmitted": false, "date": { "$gte": new Date(2023, 9, 15), "$lt": new Date(2023, 10, 1) } } } });
 
 //Datas
 
