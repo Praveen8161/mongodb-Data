@@ -2,31 +2,31 @@
 
 // 1.Find all the topics and tasks which are thought in the month of October
 
-db.date.find({ "Date": { "$gte": new Date(2023, 9, 1), "$lte": new Date(2023, 9, 31) } },{"Task":1,"topics":1,"Date":1});
+db.date.find({ "Date": { "$gte": new Date(2023, 9, 0), "$lte": new Date(2023, 9, 32) } },{"_id":0 ,"Task":1,"topics":1,"Date":1});
 
 // 2.Find all the company drives which appeared between 15 oct-2020 and 31-oct-2020
 
-db.date.find({ "date": { "$gte": new Date(2023, 9, 15), "$lte": new Date(2023, 9, 31) } }, {"Date":1,"Company_names":1});
+db.date.find({ "Date": { "$gte": new Date(2023, 9, 16), "$lte": new Date(2023, 9, 32) }, "Company_names":{$exists:true} }, {"_id":0, "Date":1,  "Company_names":1});
 
 // 3.Find all the company drives and students who are appeared for the placement.
 
-db.date.find({},{"Date":1,"Company_names":1});
-db.students.find({ "placement": true },{"StudentName":1});
+db.date.find({"Company_names":{$exists:true}},{"_id":0, "Date":1, "Company_names":1});
+
+db.students.find({ "placement": true },{"_id":0, "StudentName":1, "placement":1});
 
 // 4.Find the number of problems solved by the user in codekata
 
-db.students.find({},{"StudentName":1,"codekata_problem_solved":1});
+db.students.find({},{"_id":0, "StudentName":1, "codekata_problem_solved":1});
 
 // 5.Find all the mentors with who has the mentee's count more than 15
 
-db.mentors.find({ "menteeCount": { "$gt": 15 } });
+db.mentors.find({ "menteeCount": { "$gt": 15 } }, {"_id":0, "Batch":0});
 
 // 6.Find the number of users who are absent and task is not submitted between 15 oct-2020 and 31-oct-2020
 
-db.students.count({ "data": { "$elemMatch": { "attendance": "absent", "taskSubmitted": false, "date": { "$gte": new Date(2023, 9, 15), "$lt": new Date(2023, 10, 1) } } } });
+db.students.countDocuments({ "data": { "$elemMatch": { "attendance": "absent", "taskSubmitted": false, "date": { "$gte": new Date(2023, 9, 16), "$lt": new Date(2023, 10, 1) } } } });
 
-//Datas
-
+// Datas
 db.students.insertMany([
     {
         "StudentName": "user1",
@@ -64,7 +64,7 @@ db.students.insertMany([
                 "date": new Date(2023, 9, 23),
                 "attendance": "present",
                 "taskSubmitted": true
-            },
+            }
         ]
     },
     {
@@ -103,7 +103,7 @@ db.students.insertMany([
                 "date": new Date(2023, 9, 23),
                 "attendance": "present",
                 "taskSubmitted": true
-            },
+            }
         ]
     },
     {
@@ -142,7 +142,7 @@ db.students.insertMany([
                 "date": new Date(2023, 9, 23),
                 "attendance": "present",
                 "taskSubmitted": true
-            },
+            }
         ]
     },
     {
@@ -181,7 +181,7 @@ db.students.insertMany([
                 "date": new Date(2023, 9, 23),
                 "attendance": "present",
                 "taskSubmitted": true
-            },
+            }
         ]
     },
     {
@@ -220,7 +220,7 @@ db.students.insertMany([
                 "date": new Date(2023, 9, 23),
                 "attendance": "present",
                 "taskSubmitted": true
-            },
+            }
         ]
     },
     {
@@ -259,7 +259,7 @@ db.students.insertMany([
                 "date": new Date(2023, 9, 23),
                 "attendance": "present",
                 "taskSubmitted": true
-            },
+            }
         ]
     },
     {
@@ -298,7 +298,7 @@ db.students.insertMany([
                 "date": new Date(2023, 9, 23),
                 "attendance": "present",
                 "taskSubmitted": true
-            },
+            }
         ]
     },
     {
@@ -336,7 +336,7 @@ db.students.insertMany([
                 "date": new Date(2023, 9, 23),
                 "attendance": "present",
                 "taskSubmitted": true
-            },
+            }
         ]
     }
 ]);
